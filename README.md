@@ -1,2 +1,3 @@
-# bloodOnTheClocktower
-An app that helps run the game blood on the clock tower
+TODO
+--------------------------------------
+Figure out how forms work, and also react/typescript/javascript
