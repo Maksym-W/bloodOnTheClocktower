@@ -5,7 +5,11 @@ import sqlite3  # This is to get data for the roles
 
 class Skeleton_role():
 	def __init__(self):
-		pass
+		self.alive = True
+		self.dead_vote = True
+		self.alligence = None # Will be defined when inherited
+		self.role_description = ""
+		self.number = -1 # Will be modified according to which player gets what; -1 is placeholder
 
 	def get_ability(self, role_name):
 		# Connect to the SQLite database
@@ -24,7 +28,40 @@ class Skeleton_role():
 		else:
 			return None  # If no ability is found, return None
 
+	def die(self):
+		self.alive = False
+
+	def self_voted(self):
+		self.dead_vote = False
+
 # Now what is below are the specific town roles. They will inherit the stuff above
+
+class Chef(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.pairs = 0
+
+	def scan_for_pairs(self):
+		# TODO FIGURE OUT THE GAME LOGIC THEN IMPLEMENT IT HERE.
+		# MAYBE NEEDS A LIST OR TUPLE. ALSO self.pairs += 1
+
+
+class Empath(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.evil_neighbor = 0
+
+	def update_neighboors(self):
+		# TODO AGAIN, figure out the list thing for this to work.
+
+
+class Fortune_Teller(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.false_register = None # TODO figure out which player is a false register!
+
+	def investigate(self, player_1, player_2):
+		# TODO implement game logic for players.
 
 
 class Soldier(Skeleton_role):

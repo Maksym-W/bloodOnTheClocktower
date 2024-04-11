@@ -1,17 +1,6 @@
 import sqlite3 # Our database of choice is sqlite
 import roles.py # This imports the roles that are previously defined
 
-class Player():
-	def __init__(self, player_name : String, role):
-		# TODO
-		self.alive = True
-		self.dead_vote = True
-		self.player_name = player_name
-		self.role = role
-
-	def kill(self):
-		self.alive = False
-
 def day():
 	# TODO figure out how to get messages from the front end
 	wait_get/post_request from front end
@@ -30,24 +19,18 @@ def check_win(role_killed, method_of_killing):
 		print("The bad guys win!\n")
 		exit()
 
-def setup():
-	# Connect to the database and make a cursor
-	db = sqlite3.connect('roles.db')
-	dbcursor = db.cursor()
+def setup(players):
+	# TODO Assign roles to each player
+	# Do POST requests to send the roles to each relevant player
 
-	# Get the roles from the DB using the cursor
-	dbcursor.execute("SELECT * FROM roles")
-	roles = dbcursor.fetchall()
 
-	# Assign the roles
-	for role in roles:
-		# TODO Finish this part!
-
-	# Close
-	db.close()
+def collect_player_info():
+	# TODO Get information from the javascript side with get requests
+	return None # SWITCH TO A LIST OF PLAYER NAMES, WITH EACH POSITION IN THE LIST CORRESPONDING TO THEIR NUMBER
 
 if __name__ == '__main__':
-	setup()
+	players = collect_player_info()
+	setup(players)
 	while True:
 		day()
 		night()
