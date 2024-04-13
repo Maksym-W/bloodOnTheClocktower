@@ -64,6 +64,34 @@ class Fortune_Teller(Skeleton_role):
 		# TODO implement game logic for players.
 
 
+class Investigator(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.minion_role = None # TODO Assign this!
+		self.players_suspected = (None, None)
+
+class Librarian(Skeleton_role):
+	def __init__(self):
+		super().__init()
+		self.outsider_role = None # TODO Assign this to a player!
+		self.players_suspected = (None, None)
+
+
+class Mayor(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+
+
+class Ravenkeeper(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.learned_role = {None: None} # TODO When coded, {Player: Role}
+
+class Monk(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+
+
 class Soldier(Skeleton_role):
 	def __init__(self):
 		super().__init__()  # Initialize the base class
@@ -80,6 +108,24 @@ class Slayer(Skeleton_role):
 		self.target = target
 		if target.alligence == "Minions":
 			target.kill()
+
+
+class Washerwoman(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.town_role = None # TODO Still do this
+		self.players_suspected = (None, None)
+
+
+class Virgin(Skeleton_role):
+	def __init__(self):
+		super().__init__()
+		self.nominated_person = None # TODO If none, then no one has been nominated yet
+
+
+class Undertaker(Skeleton_role):
+	def __init__(self)
+		super().__init__()
 
 
 class Drunk(Skeleton_role):
