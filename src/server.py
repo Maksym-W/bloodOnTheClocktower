@@ -1,7 +1,15 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer # This will be used to create an HTTP server w/ post,get
 import sqlite3, os, urllib.parse
+import asyncio, websockets # This will be sending out information to the clients.
+from broadcaster import start_server
 
 
+"""
+    The below class is the HTTP server
+    It has get requests for serving up the javascript/html files
+    Post requests for ending the day/night.
+    TODO Will probably change the post for the classes.
+"""
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -27,7 +35,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
             self.wfile.write("POST request received successfully!".encode('utf-8'))
-            
+
         elif self.path == '/end_night':
             print("End night Button is clicked")
             # Read the length of the data
@@ -81,6 +89,7 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=80
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f'Starting httpd on port {port}...')
+    
     httpd.serve_forever()
 
 

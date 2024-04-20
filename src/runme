@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+
+import subprocess
+
+def run_server():
+    """Run the HTTP server script."""
+    return subprocess.Popen(["python3", "server.py"])
+
+def run_broadcaster():
+    """Run the WebSocket server script."""
+    return subprocess.Popen(["python3", "broadcaster.py"])
+
+if __name__ == '__main__':
+    # Start both servers
+    server_process = run_server()
+    broadcaster_process = run_broadcaster()
+
+    print("Both servers have been started.")
+
+    # Wait for both servers to complete
+    try:
+        server_process.wait()
+        broadcaster_process.wait()
+    except KeyboardInterrupt:
+        # Handle the interrupt signal and terminate the processes gracefully
+        print("Shutting down both servers...")
+        server_process.terminate()
+        broadcaster_process.terminate()
