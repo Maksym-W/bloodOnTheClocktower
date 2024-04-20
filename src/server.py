@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import sqlite3, os
+import sqlite3, os, urllib.parse
 
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
@@ -13,12 +13,37 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.path == '/end_day':
             print("End day Button is clicked")
+            # Read the length of the data
+            content_length = int(self.headers['Content-Length'])
+
+            # Read the data from the request body
+            post_data = self.rfile.read(content_length).decode('utf-8')
+
+            # Print the received data
+            print("Received data:", post_data)
+
+            # Send a response back to the client
             self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
             self.end_headers()
+            self.wfile.write("POST request received successfully!".encode('utf-8'))
+            
         elif self.path == '/end_night':
             print("End night Button is clicked")
+            # Read the length of the data
+            content_length = int(self.headers['Content-Length'])
+
+            # Read the data from the request body
+            post_data = self.rfile.read(content_length).decode('utf-8')
+
+            # Print the received data
+            print("Received data:", post_data)
+
+            # Send a response back to the client
             self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
             self.end_headers()
+            self.wfile.write("POST request received successfully!".encode('utf-8'))
         else:
             self.send_error(404, 'File Not Found')
 

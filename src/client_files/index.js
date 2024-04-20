@@ -14,8 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Send an AJAX request to the Python server
         var xhr = new XMLHttpRequest();
+        var data = "test works!"; 
         xhr.open("POST", "/end_day", true);
-        xhr.send();
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Request was successful, do something with the response
+                    console.log("Response received:", xhr.responseText);
+                }
+            };
+        xhr.send(data);
+
 
         // Create a new element to hold the text
         var testText = document.createElement("h6");
@@ -37,13 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add an event listener to the button for the click event
         button_night.addEventListener("click", function() {
-            // Remove the button from the document
-            document.body.removeChild(button_night);
 
             // Send an AJAX request to the Python server
             var xhr = new XMLHttpRequest();
+            var data = "test works!"; 
             xhr.open("POST", "/end_night", true);
-            xhr.send();
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Request was successful, do something with the response
+                    console.log("Response received:", xhr.responseText);
+                }
+            };
+            xhr.send(data);
 
             // Create a new element to hold the text
             var testText = document.createElement("h6");
