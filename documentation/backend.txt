@@ -1,0 +1,5 @@
+The server.py file sets up a simple http server with methods for get/post
+
+The broadcaster.py file sets up a websocket server that sends information to clients whenever it wants
+
+Im keeping these files seperate simply because I think their different purpose warrants it.  
