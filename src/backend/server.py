@@ -58,7 +58,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def serve_js_file(self):
         # Serve the JavaScript file
         try:
-            with open('client_files/index.js', 'rb') as js_file:
+            with open('backend/client_files/index.js', 'rb') as js_file:
                 self.send_response(200)
                 self.send_header('Content-type', 'text/javascript')
                 self.end_headers()

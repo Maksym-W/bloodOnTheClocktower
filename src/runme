@@ -4,11 +4,11 @@ import subprocess
 
 def run_server():
     """Run the HTTP server script."""
-    return subprocess.Popen(["python3", "server.py"])
+    return subprocess.Popen(["python3", "backend/server.py"])
 
 def run_broadcaster():
     """Run the WebSocket server script."""
-    return subprocess.Popen(["python3", "broadcaster.py"])
+    return subprocess.Popen(["python3", "backend/broadcaster.py"])
 
 if __name__ == '__main__':
     # Start both servers
