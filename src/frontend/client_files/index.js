@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchClientNumber();
     setupWebSocket();
-    createAndAppendButton('End the Day', '/end_day');
-    createAndAppendButton('End the Night', '/end_night');
+    createAndAppendButton('Im a player', '/player');
+    createAndAppendButton('Im the game master', '/master');
 });
 
 function fetchClientNumber() {
@@ -55,6 +55,8 @@ function createAndAppendButton(buttonText, endpoint) {
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 console.log("Response received:", xhr.responseText);
+                testText.innerHTML = xhr.responseText;
+                document.body.appendChild(testText);
             }
         };
         xhr.send("test works!");

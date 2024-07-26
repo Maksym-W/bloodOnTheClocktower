@@ -7,8 +7,8 @@ async def send_message(websocket, message):
 
 async def server(websocket, path):
     while True:
-        await send_message(websocket, "we confirm this works")
-        await asyncio.sleep(3)  # Sends message every 3 seconds
+        await send_message(websocket, "We are still waiting for the game to start")
+        await asyncio.sleep(20)  # Sends message every 20 seconds
 
 async def start_server():
     # Set up the WebSocket server

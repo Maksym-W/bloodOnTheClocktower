@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer # This will be used t
 import sqlite3, os, urllib.parse
 import asyncio, websockets # This will be sending out information to the clients.
 from broadcaster import start_server
+import game_rules.game_logic
 
 
 """
@@ -26,7 +27,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.serve_html_page()
 
     def do_POST(self):
-        if self.path == '/end_day':
+        if self.path == '/master':
             print("End day Button is clicked")
             # Read the length of the data
             content_length = int(self.headers['Content-Length'])
@@ -43,7 +44,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write("POST request received successfully!".encode('utf-8'))
 
-        elif self.path == '/end_night':
+        elif self.path == '/player':
             print("End night Button is clicked")
             # Read the length of the data
             content_length = int(self.headers['Content-Length'])
@@ -58,7 +59,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write("POST request received successfully!".encode('utf-8'))
+            self.wfile.write("You have not been assigned a player role yet".encode('utf-8'))
         else:
             self.send_error(404, 'File Not Found')
 

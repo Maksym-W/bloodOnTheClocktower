@@ -1,45 +1,36 @@
 import sqlite3 # Our database of choice is sqlite
-#import roles.py # This imports the roles that are previously defined TODO Finish it!
-from server import run, SimpleHTTPRequestHandler
+#import roles # This imports the roles that are previously defined TODO Finish it!
 
-def day():
-	# TODO figure out how to get messages from the front end
-	#wait_get/post_request from front end
-	pass
+class game():
+	def __init__(self, num_of_players : int) -> None:
+		self.player_list = {i: None for i in range(1, num_of_players + 1)}
+		self.game_in_progress = False
+		self.day = True # Night is represented by False
 
-def night():
-	# TODO
-	# killed = Mafia gets to discuss and vote on who to kill
-	# killed.kill()
-	pass
+	def assign_roles(self):
+		if self.game_in_progress == False:
+			self.game_in_progress = True
+			for player in self.player_list:
+				self.player_list[player] = None # TODO Replace with the roles from roles.py
+		
+	def day(self):
+		# TODO Announce the news from last night
+		# TODO Set up voting
+		pass
+	
+	def night(self):
+		# TODO Set up murders
+		# TODO Set up investigation
+		pass
 
-def voting():
-	# TODO
-	pass
-
-def check_win(role_killed, method_of_killing):
-	# TODO Everytime a player dies, we check to see if that ends the game
-	if role_killed == "Virgin" and method_of_killing == "Hanged":
-		print("The bad guys win!\n")
-		exit()
-	pass
-
-
-def setup(players):
-	# TODO Assign roles to each player
-	# Do POST requests to send the roles to each relevant player
-	pass
-
-
-def collect_player_info():
-	# TODO Get information from the javascript side with get requests
-	return None # SWITCH TO A LIST OF PLAYER NAMES, WITH EACH POSITION IN THE LIST CORRESPONDING TO THEIR NUMBER
+	def check_win(role_killed, method_of_killing):
+		# TODO Everytime a player dies, we check to see if that ends the game
+		if role_killed == "Virgin" and method_of_killing == "Hanged":
+			print("The bad guys win!\n")
+			exit()
+		pass
 
 
 if __name__ == '__main__':
-	run()
-	# players = collect_player_info()
-	# setup(players)
-	# while True:
-	# 	day()
-	# 	night()
+	print("This file contains methods for other files. Its not meant to be run\n")
+	
