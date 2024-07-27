@@ -6,6 +6,7 @@ class game():
 		self.player_list = {i: None for i in range(1, num_of_players + 1)}
 		self.game_in_progress = False
 		self.day = True # Night is represented by False
+		self.votes_left = 3
 
 	def assign_roles(self):
 		if self.game_in_progress == False:
@@ -29,6 +30,13 @@ class game():
 			print("The bad guys win!\n")
 			exit()
 		pass
+
+	def advance_time(self):
+		if self.day == True:
+			self.day = False
+		else
+			self.day = True
+			self.votes_left = 3
 
 
 if __name__ == '__main__':
