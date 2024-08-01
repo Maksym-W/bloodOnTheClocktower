@@ -44,6 +44,7 @@ class Chef(Skeleton_role):
 	def scan_for_pairs(self):
 		# TODO FIGURE OUT THE GAME LOGIC THEN IMPLEMENT IT HERE.
 		# MAYBE NEEDS A LIST OR TUPLE. ALSO self.pairs += 1
+		pass
 
 
 class Empath(Skeleton_role):
@@ -53,6 +54,7 @@ class Empath(Skeleton_role):
 
 	def update_neighboors(self):
 		# TODO AGAIN, figure out the list thing for this to work.
+		pass
 
 
 class Fortune_Teller(Skeleton_role):
@@ -62,6 +64,7 @@ class Fortune_Teller(Skeleton_role):
 
 	def investigate(self, player_1, player_2):
 		# TODO implement game logic for players.
+		pass
 
 
 class Investigator(Skeleton_role):
@@ -126,7 +129,7 @@ class Virgin(Skeleton_role):
 
 
 class Undertaker(Skeleton_role):
-	def __init__(self)
+	def __init__(self):
 		super().__init__()
 
 

@@ -1,5 +1,5 @@
 import sqlite3 # Our database of choice is sqlite
-import roles # This imports the roles that are previously defined TODO Finish it!
+import game_rules.roles # This imports the roles that are previously defined TODO Finish it!
 
 class game():
 	def __init__(self, num_of_players : int) -> None:
@@ -53,11 +53,15 @@ class game():
 	def advance_time(self):
 		if self.day == True:
 			self.day = False
-		else
+		else:
 			self.day = True
 			self.votes_left = 3
 
 
 if __name__ == '__main__':
-	print("This file contains methods for other files. Its not meant to be run\n")
-	
+    try:
+        print("This file contains methods for other files. It's not meant to be run.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        print("This is most likely due to the line 'game_rules.roles', which works for the ./runme file.")
+
