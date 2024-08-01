@@ -57,6 +57,10 @@ function createAndAppendButton(buttonText, endpoint) {
                 console.log("Response received:", xhr.responseText);
                 testText.innerHTML = xhr.responseText;
                 document.body.appendChild(testText);
+
+                if (xhr.responseText.includes("game master")) {
+                    setupMaster();
+                }
             }
         };
         xhr.send("test works!");
@@ -67,4 +71,37 @@ function createAndAppendButton(buttonText, endpoint) {
     });
 
     document.body.appendChild(button);
+}
+
+function setupMaster() {
+    buttonText = "Start Game"
+    endpoint = "/masterSet"
+
+    const button = document.createElement("button");
+    button.innerHTML = buttonText;
+    button.style.marginLeft = "25px";
+    button.addEventListener("click", function() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", endpoint, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Response received:", xhr.responseText);
+                testText.innerHTML = xhr.responseText;
+                document.body.appendChild(testText);
+
+                if (xhr.responseText.includes("game master")) {
+                    setupMaster();
+                }
+            }
+        };
+        xhr.send("test works!");
+
+        const testText = document.createElement("h6");
+        testText.innerHTML = "This is a test";
+        document.body.appendChild(testText);
+    });
+
+    document.body.appendChild(button);
+
 }

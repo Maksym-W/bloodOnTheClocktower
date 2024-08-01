@@ -13,11 +13,13 @@ import game_rules.game_logic
 """
 
 client_count = 0
+game_master = None
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         global client_count
+
         if self.path == '/index.js':
             self.serve_js_file()
         elif self.path == '/client_number':
@@ -27,11 +29,19 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.serve_html_page()
 
     def do_POST(self):
+        global game_master
+
         if self.path == '/master':
             print("End day Button is clicked")
+            if game_master == None:
+                game_master = self.client_address[0]
+                print("The game master is: " + game_master)
+            else:
+                print(self.client_address[0] + " tried to be the game master.")
+            
             # Read the length of the data
             content_length = int(self.headers['Content-Length'])
-
+            
             # Read the data from the request body
             post_data = self.rfile.read(content_length).decode('utf-8')
 
@@ -42,10 +52,11 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write("POST request received successfully!".encode('utf-8'))
+            self.wfile.write("POST request received successfully! You are the game master".encode('utf-8'))
 
         elif self.path == '/player':
             print("End night Button is clicked")
+
             # Read the length of the data
             content_length = int(self.headers['Content-Length'])
 
