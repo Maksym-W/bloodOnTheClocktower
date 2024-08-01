@@ -1,5 +1,5 @@
 import sqlite3 # Our database of choice is sqlite
-#import roles # This imports the roles that are previously defined TODO Finish it!
+import roles # This imports the roles that are previously defined TODO Finish it!
 
 class game():
 	def __init__(self, num_of_players : int) -> None:
@@ -7,18 +7,37 @@ class game():
 		self.game_in_progress = False
 		self.day = True # Night is represented by False
 		self.votes_left = 3
+		self.news = [] # Announced at the start of every day TODO figure out how to store new
 
 	def assign_roles(self):
 		if self.game_in_progress == False:
 			self.game_in_progress = True
 			for player in self.player_list:
-				self.player_list[player] = None # TODO Replace with the roles from roles.py
+				self.player_list[player] = roles.Soldier() # TODO Replace with the roles from roles.py
+
+	def begin_game(self):
+		self.game_in_progress = True
+		self.news.append("The game has begun")
+		self.begin_day()
 		
-	def day(self):
-		# TODO Announce the news from last night
-		# TODO Set up voting
-		pass
+	def begin_day(self):
+		for item in self.news:
+			print(item) # might need to change this part
+			self.news.remove(item)
+		self.votes_left = 3
+		self.day = True
 	
+	def voting(self, player):
+		if self.votes_left <= 0:
+			print("Invalid: No more votes are allowed in the day")
+		else:
+			self.votes_left -= 1
+			print("We will wait 30 seconds for the accused to make their case.")
+			wait(3000)
+			votes = 0 # TODO Get the votes from the frontend
+			if votes > 0: # TODO replace 0 with amount of alive players/2
+				player.alive = False # TODO figure out if the game should continue in day or go to night after murder
+
 	def night(self):
 		# TODO Set up murders
 		# TODO Set up investigation

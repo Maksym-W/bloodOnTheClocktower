@@ -70,6 +70,7 @@ class Investigator(Skeleton_role):
 		self.minion_role = None # TODO Assign this!
 		self.players_suspected = (None, None)
 
+
 class Librarian(Skeleton_role):
 	def __init__(self):
 		super().__init()
@@ -86,6 +87,7 @@ class Ravenkeeper(Skeleton_role):
 	def __init__(self):
 		super().__init__()
 		self.learned_role = {None: None} # TODO When coded, {Player: Role}
+
 
 class Monk(Skeleton_role):
 	def __init__(self):
