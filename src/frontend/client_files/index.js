@@ -81,6 +81,10 @@ function setupMaster() {
     button.innerHTML = buttonText;
     button.style.marginLeft = "25px";
     button.addEventListener("click", function() {
+        // Remove all existing buttons before creating a new one
+        const existingButtons = document.querySelectorAll("button");
+        existingButtons.forEach((btn) => btn.remove()); 
+
         const xhr = new XMLHttpRequest();
         xhr.open("POST", endpoint, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

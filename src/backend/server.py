@@ -71,6 +71,25 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
             self.wfile.write("You have not been assigned a player role yet".encode('utf-8'))
+
+        elif self.path == '/masterSet':
+            print("MasterSet Button is clicked")
+
+            # Read the length of the data
+            content_length = int(self.headers['Content-Length'])
+
+            # Read the data from the request body
+            post_data = self.rfile.read(content_length).decode('utf-8')
+
+            # Print the received data
+            print("Received data:", post_data)
+
+            # Send a response back to the client
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write("hello there".encode('utf-8'))
+
         else:
             self.send_error(404, 'File Not Found')
 
