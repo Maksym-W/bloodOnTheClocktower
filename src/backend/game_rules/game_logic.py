@@ -2,6 +2,27 @@ import sqlite3 # Our database of choice is sqlite
 import game_rules.roles # This imports the roles that are previously defined TODO Finish it!
 
 class game():
+	"""
+	A class to represent the game instance.
+
+    Attributes
+    ----------
+    player_list : dict
+        A dictionary to store player information, with player number as keys and None as default values.
+    game_in_progress : bool
+        A boolean indicating whether the game is currently in progress.
+    day : bool
+        A boolean representing whether it is day time in the game (True for day, False for night).
+    votes_left : int
+        An integer representing the number of votes left in the game.
+    news : list
+        A list to store news items that are announced at the start of every day.
+
+    Methods
+    -------
+    __init__(num_of_players: int) -> None:
+        Initializes the game with the specified number of players.
+	"""
 	def __init__(self, num_of_players : int) -> None:
 		self.player_list = {i: None for i in range(1, num_of_players + 1)}
 		self.game_in_progress = False

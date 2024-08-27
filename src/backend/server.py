@@ -129,7 +129,14 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(f'{{"client_number": {client_number}}}'.encode('utf-8'))
 
 
+def setup_game():
+    # TODO Given the number of players in the game, give each player a random role.
+    game_instance = game_rules.game_logic.game(client_count)
+    game_instance.assign_roles()
+    pass
+
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8001):
+
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print(f'Starting httpd on port {port}...')
