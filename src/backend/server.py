@@ -84,6 +84,13 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             # Print the received data
             print("Received data:", post_data)
 
+            # Set up the game
+            game_instance = setup_game()
+            print(game_instance.player_list)
+            for player in game_instance.player_list:
+                print(game_instance.player_list[player])
+
+            print("We have printed all of the players now.")
             # Send a response back to the client
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
@@ -133,7 +140,7 @@ def setup_game():
     # TODO Given the number of players in the game, give each player a random role.
     game_instance = game_rules.game_logic.game(client_count)
     game_instance.assign_roles()
-    pass
+    return game_instance
 
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8001):
 

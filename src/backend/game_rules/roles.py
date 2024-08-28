@@ -11,22 +11,26 @@ class Skeleton_role():
 		self.role_description = ""
 		self.number = -1 # Will be modified according to which player gets what; -1 is placeholder
 
+	def __str__(self) -> str:
+		return "This player is the: " + self.__class__.__name__ + " role."
+
 	def get_ability(self, role_name):
 		# Connect to the SQLite database
-		conn = sqlite3.connect('game.db')
-		cursor = conn.cursor()
+		pass
+		# conn = sqlite3.connect('game.db')
+		# cursor = conn.cursor()
 
-		# Execute a query to get the ability based on the role name
-		cursor.execute("SELECT ability FROM roles WHERE name = ?", (role_name,)) # TODO FIX THIS QUERY
-		result = cursor.fetchone()
+		# # Execute a query to get the ability based on the role name
+		# cursor.execute("SELECT ability FROM roles WHERE name = ?", (role_name,)) # TODO FIX THIS QUERY
+		# result = cursor.fetchone()
 
-		# Close the database connection
-		conn.close()
+		# # Close the database connection
+		# conn.close()
 
-		if result:
-			return result[0]  # Return the ability
-		else:
-			return None  # If no ability is found, return None
+		# if result:
+		# 	return result[0]  # Return the ability
+		# else:
+		# 	return None  # If no ability is found, return None
 
 	def die(self):
 		self.alive = False

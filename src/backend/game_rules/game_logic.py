@@ -1,5 +1,5 @@
 import sqlite3 # Our database of choice is sqlite
-import game_rules.roles # This imports the roles that are previously defined TODO Finish it!
+import game_rules.roles as roles# This imports the roles that are previously defined TODO Finish it!
 
 class game():
 	"""
