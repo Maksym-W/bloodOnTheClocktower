@@ -141,3 +141,7 @@ class Drunk(Skeleton_role):
 	def __init__(self, percieved_role):
 		super().__init__()
 		self.percieved_role = percieved_role
+
+
+if __name__ == '__main__':
+    print("Why are you running this file? Its meant to be imported")

@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer # This will be used to create an HTTP server w/ post,get
 import sqlite3, os, urllib.parse
 import asyncio, websockets # This will be sending out information to the clients.
-from broadcaster import start_server
+from broadcaster import start_server, send_player_message
 import game_rules.game_logic
 
 
@@ -13,12 +13,16 @@ import game_rules.game_logic
 """
 
 client_count = 0
+clients = [] # TODO rewrite the code such that whenever client_count is used, len(clients) is used instead.
 game_master = None
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        global client_count
+        global client_count, clients
+
+        if self.client_address[0] not in clients:
+            clients.append(self.client_address[0])
 
         if self.path == '/index.js':
             self.serve_js_file()
@@ -30,6 +34,8 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         global game_master
+
+        # TODO Determine if we need to register clients here.
 
         if self.path == '/master':
             print("End day Button is clicked")
@@ -86,11 +92,12 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
             # Set up the game
             game_instance = setup_game()
-            print(game_instance.player_list)
-            for player in game_instance.player_list:
-                print(game_instance.player_list[player])
 
-            print("We have printed all of the players now.")
+            # Tell the players their roles. TODO use the broadcaster.
+            asyncio.run(send_player_message("Game setup complete. You have been assigned roles.")) # TODO TO FIX THIS, WE NEED TO PASS IN THE CLIENTS INTO HERE. 
+            print(clients)
+            print("----------------------------------------------")
+
             # Send a response back to the client
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
