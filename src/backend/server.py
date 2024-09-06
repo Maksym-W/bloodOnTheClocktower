@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from http.server import BaseHTTPRequestHandler, HTTPServer # This will be used to create an HTTP server w/ post,get
 import sqlite3, os, urllib.parse
 import asyncio, websockets # This will be sending out information to the clients.
@@ -169,11 +171,18 @@ async def server(websocket, path):
     print(connected_clients)
 
     try:
-        while True:
-            # Send periodic messages to keep clients connected
-            await send_message(websocket, str(connected_clients))
-            await asyncio.sleep(20)
-            #await send_player_message("BALLS TO THE WALL")
+        # while True:
+        #     # Send periodic messages to keep clients connected
+        #     await send_message(websocket, str(connected_clients))
+        #     await asyncio.sleep(20)
+        #     #await send_player_message("BALLS TO THE WALL")
+        async for message in websocket:
+            if message == "test works!":
+                response = "The super cool button was clicked!"
+                # Send the response to all connected clients
+                await asyncio.gather(
+                    *(client.send(response) for client in connected_clients)
+                )
     except websockets.ConnectionClosed as e:
         print(f"Client disconnected: {websocket.remote_address}. Reason: {e}")
     except Exception as e:
@@ -190,10 +199,12 @@ async def start_server():
         print("WebSocket server started on ws://localhost:8765")
         await asyncio.Future()  # Block here indefinitely
 
+
 if __name__ == '__main__':
     # Idea is to run HTTP in a thread, and the broadcaster async
 
     thread = Thread(target=run)
     thread.start()
+    #thread.join() # Uncomment this if you get rid of the websocket server
 
     asyncio.run(start_server())

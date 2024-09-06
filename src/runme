@@ -8,6 +8,7 @@ def run_server():
 
 
 if __name__ == '__main__':
+    print("There may be an issue with this file: run server.py directly instead if there are issues\n")
     # Start both servers
     server_process = run_server()
 
