@@ -1,9 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer # This will be used to create an HTTP server w/ post,get
 import sqlite3, os, urllib.parse
 import asyncio, websockets # This will be sending out information to the clients.
-from broadcaster import start_server, send_player_message
 import game_rules.game_logic
-
+from threading import Thread
 
 """
     The below class is the HTTP server
@@ -15,6 +14,7 @@ import game_rules.game_logic
 client_count = 0
 clients = [] # TODO rewrite the code such that whenever client_count is used, len(clients) is used instead.
 game_master = None
+connected_clients = set()  # Keep track of connected clients
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
 
@@ -94,7 +94,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             game_instance = setup_game()
 
             # Tell the players their roles. TODO use the broadcaster.
-            asyncio.run(send_player_message("Game setup complete. You have been assigned roles.")) # TODO TO FIX THIS, WE NEED TO PASS IN THE CLIENTS INTO HERE. 
+            #asyncio.run(send_player_message("Game setup complete. You have been assigned roles.")) # TODO TO FIX THIS, WE NEED TO PASS IN THE CLIENTS INTO HERE. 
             print(clients)
             print("----------------------------------------------")
 
@@ -110,7 +110,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
     def serve_js_file(self):
         # Serve the JavaScript file
         try:
-            with open('frontend/client_files/index.js', 'rb') as js_file:
+            with open('../frontend/client_files/index.js', 'rb') as js_file:
                 self.send_response(200)
                 self.send_header('Content-type', 'text/javascript')
                 self.end_headers()
@@ -119,9 +119,6 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: client_files/index.js')
 
     def serve_html_page(self):
-        # Get the current directory
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-
         # Navigate to the client_files directory
         client_files_directory = os.path.join(os.path.dirname(__file__), '../frontend/client_files')
 
@@ -149,6 +146,7 @@ def setup_game():
     game_instance.assign_roles()
     return game_instance
 
+
 def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=8001):
 
     server_address = ('', port)
@@ -158,5 +156,44 @@ def run(server_class=HTTPServer, handler_class=SimpleHTTPRequestHandler, port=80
     httpd.serve_forever()
 
 
+async def send_message(websocket, message):
+    print("Sending message:", message)
+    await websocket.send(message)
+
+
+async def server(websocket, path):
+    global connected_clients  # Ensure you're referencing the global set
+    # Add the connected websocket client to the set
+    connected_clients.add(websocket)
+    print(f"New fucking client connected: {websocket.remote_address}")
+    print(connected_clients)
+
+    try:
+        while True:
+            # Send periodic messages to keep clients connected
+            await send_message(websocket, str(connected_clients))
+            await asyncio.sleep(20)
+            #await send_player_message("BALLS TO THE WALL")
+    except websockets.ConnectionClosed as e:
+        print(f"Client disconnected: {websocket.remote_address}. Reason: {e}")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    finally:
+        # Remove the websocket client when it disconnects
+        connected_clients.remove(websocket)
+
+
+async def start_server():
+    # Set up the WebSocket server
+    websocket_server = websockets.serve(server, "localhost", 8765)
+    async with websocket_server:
+        print("WebSocket server started on ws://localhost:8765")
+        await asyncio.Future()  # Block here indefinitely
+
 if __name__ == '__main__':
-    run()
+    # Idea is to run HTTP in a thread, and the broadcaster async
+
+    thread = Thread(target=run)
+    thread.start()
+
+    asyncio.run(start_server())
