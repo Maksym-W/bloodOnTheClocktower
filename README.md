@@ -2,10 +2,6 @@ Welcome to a digital recreation of the classic board game, blood on the clocktow
 
 
 
-TODO
---------------------------------------
-Figure out how forms work, and also react/typescript/javascript
-
 HOW TO RUN
 ---------------------------------------
 In src, do either
