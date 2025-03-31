@@ -1,8 +1,0 @@
-The server.py file sets up a simple http server with methods for get/post. Here are the following methods
-    post
-        player: Works with players
-        master: Works with a master player.
-
-The broadcaster.py file sets up a websocket server that sends information to clients whenever it wants
-
-The game_logic.py is imported into other files. It contains the logic of the game, 
